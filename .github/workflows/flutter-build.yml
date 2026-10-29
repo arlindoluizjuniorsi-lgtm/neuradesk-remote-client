@@ -12,6 +12,9 @@ on:
       publish-update-metadata:
         type: boolean
         default: false
+      windows-only:
+        type: boolean
+        default: false
 
 # NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
 # variables from this workflow!
@@ -96,6 +99,7 @@ jobs:
 
   generate-sbom:
     needs: [validate-update-metadata-keys]
+    if: ${{ !inputs.windows-only }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -549,6 +553,7 @@ jobs:
     runs-on: ${{ matrix.job.os }}
     # Temporarily disable this action due to additional test is needed.
     # if: false
+    if: ${{ !inputs.windows-only }}
     strategy:
       fail-fast: false
       matrix:
@@ -725,7 +730,7 @@ jobs:
             ./SignOutput/rustdesk-*.exe
 
   build-rustdesk-ios:
-    if: ${{ inputs.upload-artifact }}
+    if: ${{ inputs.upload-artifact && !inputs.windows-only }}
     name: build rustdesk ios ipa
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
@@ -850,6 +855,7 @@ jobs:
     name: ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
+    if: ${{ !inputs.windows-only }}
     strategy:
       fail-fast: false
       matrix:
@@ -1257,7 +1263,7 @@ jobs:
       - build-for-windows-flutter
       - build-for-windows-sciter
     runs-on: ubuntu-latest
-    if: ${{ inputs.upload-artifact }}
+    if: ${{ inputs.upload-artifact && !inputs.windows-only }}
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
@@ -1314,6 +1320,7 @@ jobs:
 
   build-rustdesk-android:
     needs: [generate-bridge]
+    if: ${{ !inputs.windows-only }}
     name: build rustdesk android apk ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.os }}
     strategy:
@@ -1608,7 +1615,7 @@ jobs:
   build-rustdesk-android-universal:
     needs: [build-rustdesk-android]
     name: build rustdesk android universal apk
-    if: ${{ inputs.upload-artifact }}
+    if: ${{ inputs.upload-artifact && !inputs.windows-only }}
     runs-on: ubuntu-24.04
     env:
       reltype: release
@@ -1792,6 +1799,7 @@ jobs:
 
   build-rustdesk-linux:
     needs: [generate-bridge]
+    if: ${{ !inputs.windows-only }}
     name: build rustdesk linux ${{ matrix.job.target }}
     runs-on: ${{ matrix.job.on }}
     strategy:
@@ -2141,6 +2149,7 @@ jobs:
   # flatpak need that job, and a failure here must not skip them.
   build-rustdesk-linux-drm:
     needs: [generate-bridge]
+    if: ${{ !inputs.windows-only }}
     name: build rustdesk linux drm x86_64
     runs-on: ubuntu-22.04
     steps:
@@ -2459,7 +2468,7 @@ jobs:
           path: ${{ env.DRM_DEB }}
 
   build-rustdesk-linux-sciter:
-    if: ${{ inputs.upload-artifact }}
+    if: ${{ inputs.upload-artifact && !inputs.windows-only }}
     needs: [validate-update-metadata-keys]
     runs-on: ${{ matrix.job.on }}
     name: build-rustdesk-linux-sciter ${{ matrix.job.target }}
@@ -2705,7 +2714,7 @@ jobs:
     name: Build appimage ${{ matrix.job.target }}
     needs: [build-rustdesk-linux]
     runs-on: ubuntu-22.04
-    if: ${{ inputs.upload-artifact }}
+    if: ${{ inputs.upload-artifact && !inputs.windows-only }}
     strategy:
       fail-fast: false
       matrix:
@@ -2760,7 +2769,7 @@ jobs:
       - build-rustdesk-linux
       - build-rustdesk-linux-sciter
     runs-on: ${{ matrix.job.on }}
-    if: ${{ inputs.upload-artifact }}
+    if: ${{ inputs.upload-artifact && !inputs.windows-only }}
     strategy:
       fail-fast: false
       matrix:
