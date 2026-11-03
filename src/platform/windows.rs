@@ -2027,9 +2027,10 @@ fn get_public_base_dir() -> PathBuf {
 
 #[inline]
 pub fn get_custom_client_staging_dir() -> PathBuf {
+    let app_name = crate::get_app_name();
     get_public_base_dir()
-        .join("RustDesk")
-        .join("RustDeskCustomClientStaging")
+        .join(&app_name)
+        .join(format!("{}CustomClientStaging", app_name))
 }
 
 /// Removes the custom client staging directory.
@@ -4188,7 +4189,7 @@ pub fn message_box(text: &str) {
         .encode_utf16()
         .chain(std::iter::once(0))
         .collect::<Vec<u16>>();
-    let caption = "RustDesk Output"
+    let caption = format!("{} Output", crate::get_app_name())
         .encode_utf16()
         .chain(std::iter::once(0))
         .collect::<Vec<u16>>();
