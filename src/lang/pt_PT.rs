@@ -832,5 +832,6 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("activation_invalid_key", "Chave de ativação inválida"),
         ("activation_already_used", "Esta chave já está ativada noutro dispositivo"),
         ("activation_blocked", "Esta chave foi bloqueada"),
+        ("update_available_tip", "Está disponível uma nova versão do NeuraDesk Remote."),
     ].iter().cloned().collect();
 }
