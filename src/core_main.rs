@@ -306,6 +306,19 @@ pub fn core_main() -> Option<CoreMainAction> {
                 #[cfg(windows)]
                 hbb_common::allow_err!(crate::platform::windows::uninstall_cert());
                 return None;
+            } else if args[0] == "--clear-activation" {
+                // Serial activation is cached as a local option, which (like
+                // login/session state) intentionally survives a normal
+                // uninstall. Run as part of the uninstall script so a fresh
+                // install always re-prompts for the serial instead of
+                // silently reusing the previous activation.
+                config::LocalConfig::set_option("activation_key".to_owned(), "".to_owned());
+                config::LocalConfig::set_option("activation_status".to_owned(), "".to_owned());
+                config::LocalConfig::set_option(
+                    "activation_checked_at".to_owned(),
+                    "".to_owned(),
+                );
+                return None;
             } else if args[0] == "--install-idd" {
                 #[cfg(windows)]
                 if crate::virtual_display_manager::is_virtual_display_supported() {

@@ -1887,9 +1887,11 @@ fn get_uninstall(kill_self: bool, uninstall_printer: bool) -> ResultType<String>
 
     let mut uninstall_cert_cmd = "".to_string();
     let mut uninstall_printer_cmd = "".to_string();
+    let mut clear_activation_cmd = "".to_string();
     if let Ok(exe) = std::env::current_exe() {
         if let Some(exe_path) = exe.to_str() {
             uninstall_cert_cmd = format!("\"{}\" --uninstall-cert", exe_path);
+            clear_activation_cmd = format!("\"{}\" --clear-activation", exe_path);
             if uninstall_printer {
                 uninstall_printer_cmd = format!("\"{}\" --uninstall-remote-printer", &exe_path);
             }
@@ -1900,6 +1902,7 @@ fn get_uninstall(kill_self: bool, uninstall_printer: bool) -> ResultType<String>
     {before_uninstall}
     {uninstall_printer_cmd}
     {uninstall_cert_cmd}
+    {clear_activation_cmd}
     reg delete {subkey} /f
     {uninstall_amyuni_idd}
     if exist \"{path}\" rd /s /q \"{path}\"
