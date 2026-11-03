@@ -823,5 +823,14 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("Please select Android → media.", "Por favor selecione Android → media."),
         ("Trust duration (days)", "Duração da confiança (dias)"),
         ("Renew trust", "Renovar confiança"),
+        ("activation_title", "Ativar o NeuraDesk Remote"),
+        ("activation_tip", "Introduza a chave de ativação que recebeu para desbloquear este software."),
+        ("Activation Key", "Chave de Ativação"),
+        ("Activate", "Ativar"),
+        ("Please enter the activation key", "Introduza a chave de ativação"),
+        ("Activation failed", "Falha na ativação"),
+        ("activation_invalid_key", "Chave de ativação inválida"),
+        ("activation_already_used", "Esta chave já está ativada noutro dispositivo"),
+        ("activation_blocked", "Esta chave foi bloqueada"),
     ].iter().cloned().collect();
 }

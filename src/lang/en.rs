@@ -291,5 +291,14 @@ pub static ref T: std::collections::HashMap<&'static str, &'static str> =
         ("api_server_connection_tip", "Your custom server uses unencrypted HTTP. Contact your administrator to enable HTTPS."),
         ("api_server_empty_tip", "With API Server empty, your custom server defaults to HTTP. Contact your administrator to enable HTTPS."),
         ("android-logs-folder-tip", "Choose Android → media to store log files."),
+        ("activation_title", "Activate NeuraDesk Remote"),
+        ("activation_tip", "Enter the activation key you received to unlock this software."),
+        ("Activation Key", "Activation Key"),
+        ("Activate", "Activate"),
+        ("Please enter the activation key", "Please enter the activation key"),
+        ("Activation failed", "Activation failed"),
+        ("activation_invalid_key", "Invalid activation key"),
+        ("activation_already_used", "This key is already activated on another device"),
+        ("activation_blocked", "This key has been blocked"),
     ].iter().cloned().collect();
 }
